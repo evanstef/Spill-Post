@@ -7,7 +7,7 @@
         <div class="flex items-center gap-2">
             {{-- image users --}}
             <div class="w-6 h-6 sm:w-8 sm:h-8">
-                <img class="w-full h-full object-cover rounded-full" src="{{ $bookmark->post->user->image ? asset('storage/' . $bookmark->post->user->image) : asset('storage/images/gambar-foto-profil-7.jpg') }}" alt="">
+                <img class="w-full h-full object-cover rounded-full" src="{{ $bookmark->post->user->image ? $bookmark->post->user->image : asset('images-profil/gambar-foto-profil-7.jpg') }}" alt="">
             </div>
             <a href="{{ route('profile.show', $bookmark->post->user) }}" class="text-xs sm:text-base hover:underline hover:text-blue-600 duration-300 ease-in-out">{{ $bookmark->post->user->username }}</a>
         </div>
@@ -18,7 +18,7 @@
 
     {{-- Post Content --}}
     <div>
-        <p class="text-[11px] sm:text-base">{{ $bookmark->post->body }}</p>
+        <p class="text-[11px] sm:text-base post-content-bookmark">{!! nl2br(e($bookmark->post->body)) !!}</p>
     </div>
 
     {{-- Post Image --}}
@@ -26,14 +26,14 @@
         {{-- pengecekan bila gambar nya hanya satu --}}
         @if ($bookmark->post->images->count() === 1)
             <div class="w-full h-40 sm:h-44 md:h-52 lg:h-[300px] xl:h-[400px]">
-                <img src="{{ asset('storage/' . $bookmark->post->images[0]->image_path) }}" class="w-full h-full object-contain " alt="Image 1">
+                <img src="{{ $bookmark->post->images[0]->image_path }}" class="w-full h-full object-contain " alt="Image 1">
             </div>
         @else
         <div id="carousel-bookmark-{{ $bookmark->post->id }}" class="carousel carousel-bookmark w-full relative" data-post-bookmark-id="{{ $bookmark->post->id }}">
             @foreach ($bookmark->post->images as $key => $image)
                 <div class="carousel-item carousel-item-bookmark relative w-full transition-transform ease-in-out duration-700 {{ $key === 0 ? 'active' : 'hidden' }}" data-slide="{{ $key }}">
                     <div class="w-full h-40 sm:h-44 md:h-52 lg:h-[300px] xl:h-[400px]">
-                        <img src="{{ asset('storage/' . $image->image_path) }}" class="w-full h-full object-contain" alt="Image {{ $key + 1 }}">
+                        <img src="{{ $image->image_path }}" class="w-full h-full object-contain" alt="Image {{ $key + 1 }}">
                     </div>
                 </div>
             @endforeach
@@ -107,7 +107,7 @@
                                 @foreach ($userLikesPost as $user)
                                 <div class="flex items-center justify-between mr-2 sm:mr-4">
                                     <div class="flex items-center gap-2">
-                                        <img src="{{ $user->image ? asset('storage/' . $user->image) : asset('storage/images/gambar-foto-profil-7.jpg') }}" class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 rounded-full object-cover" alt="">
+                                        <img src="{{ $user->image ?  $user->image : asset('images-profil/gambar-foto-profil-7.jpg') }}" class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 rounded-full object-cover" alt="">
                                         <a href="{{ route('profile.show', $user) }}" class="text-sm sm:text-base hover:underline hover:text-blue-600 duration-300 ease-in-out">{{ $user->username }}</a>
                                     </div>
                                     <div>
@@ -155,46 +155,56 @@
 </div>
 <script>
     // Loop melalui setiap carousel bookmark
-document.querySelectorAll('.carousel-bookmark').forEach(carousel => {
-    const postIdBookmark = carousel.getAttribute('data-post-bookmark-id');
-    const carouselItemsBookmark = carousel.querySelectorAll('.carousel-item-bookmark');
-    const prevArrowBookmark = carousel.querySelector(`.prevArrowBookmark[data-post-bookmark-id="${postIdBookmark}"]`);
-    const nextArrowBookmark = carousel.querySelector(`.nextArrowBookmark[data-post-bookmark-id="${postIdBookmark}"]`);
-    const dotsBookmark = document.querySelectorAll(`#dots-bookmark-${postIdBookmark} .dot-bookmark`);
+    document.querySelectorAll('.carousel-bookmark').forEach(carousel => {
+        const postIdBookmark = carousel.getAttribute('data-post-bookmark-id');
+        const carouselItemsBookmark = carousel.querySelectorAll('.carousel-item-bookmark');
+        const prevArrowBookmark = carousel.querySelector(`.prevArrowBookmark[data-post-bookmark-id="${postIdBookmark}"]`);
+        const nextArrowBookmark = carousel.querySelector(`.nextArrowBookmark[data-post-bookmark-id="${postIdBookmark}"]`);
+        const dotsBookmark = document.querySelectorAll(`#dots-bookmark-${postIdBookmark} .dot-bookmark`);
 
-    let currentIndexBookmark = 0;
+        let currentIndexBookmark = 0;
 
-    // Fungsi untuk mengupdate warna dots
-    function updateDotsBookmarks(activeIndex) {
-        dotsBookmark.forEach((dot, index) => {
-            dot.classList.toggle('bg-gray-600', index === activeIndex);
-            dot.classList.toggle('bg-gray-400', index !== activeIndex);
+        // Fungsi untuk mengupdate warna dots
+        function updateDotsBookmarks(activeIndex) {
+            dotsBookmark.forEach((dot, index) => {
+                dot.classList.toggle('bg-gray-600', index === activeIndex);
+                dot.classList.toggle('bg-gray-400', index !== activeIndex);
+            });
+        }
+
+        // Fungsi untuk mengubah slide
+        function goToSlideBookmarks(index) {
+            carouselItemsBookmark.forEach((item, i) => {
+                item.classList.toggle('hidden', i !== index);
+                item.classList.toggle('active', i === index);
+            });
+            currentIndexBookmark = index;
+            updateDotsBookmarks(currentIndexBookmark); // Update dots
+        }
+
+        // Event listener untuk tombol arrow
+        prevArrowBookmark.addEventListener('click', () => {
+            const newIndexBookmark = (currentIndexBookmark - 1 + carouselItemsBookmark.length) % carouselItemsBookmark.length;
+            goToSlideBookmarks(newIndexBookmark);
         });
-    }
 
-    // Fungsi untuk mengubah slide
-    function goToSlideBookmarks(index) {
-        carouselItemsBookmark.forEach((item, i) => {
-            item.classList.toggle('hidden', i !== index);
-            item.classList.toggle('active', i === index);
+        nextArrowBookmark.addEventListener('click', () => {
+            const newIndexBookmark = (currentIndexBookmark + 1) % carouselItemsBookmark.length;
+            goToSlideBookmarks(newIndexBookmark);
         });
-        currentIndexBookmark = index;
-        updateDotsBookmarks(currentIndexBookmark); // Update dots
-    }
 
-    // Event listener untuk tombol arrow
-    prevArrowBookmark.addEventListener('click', () => {
-        const newIndexBookmark = (currentIndexBookmark - 1 + carouselItemsBookmark.length) % carouselItemsBookmark.length;
-        goToSlideBookmarks(newIndexBookmark);
+        // Inisialisasi awal untuk dots pada slide pertama
+        updateDotsBookmarks(currentIndexBookmark);
     });
 
-    nextArrowBookmark.addEventListener('click', () => {
-        const newIndexBookmark = (currentIndexBookmark + 1) % carouselItemsBookmark.length;
-        goToSlideBookmarks(newIndexBookmark);
-    });
+    // membuat hashtag pada post body berwarna biru
+    document.addEventListener("DOMContentLoaded", function() {
+        const postContent = document.querySelectorAll('.post-content-bookmark');
 
-    // Inisialisasi awal untuk dots pada slide pertama
-    updateDotsBookmarks(currentIndexBookmark);
-});
+        postContent.forEach(content => {
+            const updatedContent = content.innerHTML.replace(/(#\w+)/g, '<span class="text-blue-600 hover:underline hover:cursor-pointer">$1</span>');
+            content.innerHTML = updatedContent;
+        });
+    });
 
 </script>

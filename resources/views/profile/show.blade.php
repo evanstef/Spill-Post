@@ -1,9 +1,14 @@
 <x-app-layout>
+    {{-- title --}}
+    <x-slot name="title">
+        {{ __('Profile') }}
+    </x-slot>
+    {{-- akhir title --}}
     <x-layout-content class="w-full sm:w-[80%] rounded-lg p-4 xl:p-6 mx-4 sm:mx-0">
         <div class="flex justify-between gap-5 sm:gap-10">
             {{-- foto user --}}
             <div class="w-[30%]">
-                <img class="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 xl:w-40 xl:h-40 rounded-full object-cover" src="{{ $user->image ? asset('storage/' . $user->image) : asset('storage/images/gambar-foto-profil-7.jpg') }}" alt="">
+                <img class="w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 xl:w-40 xl:h-40 rounded-full object-cover" src="{{ $user->image ? $user->image : asset('images-profil/gambar-foto-profil-7.jpg') }}" alt="">
                 <div class="mt-1 sm:hidden w-full">
                     <p class="font-bold text-sm">{{ $user->username }}</p>
                     <p class="text-xs">{{ $user->description }}</p>
@@ -50,7 +55,7 @@
                                             @foreach ($followers as $follower)
                                                 <div class="flex justify-between items-center {{ $followers->count() >= 8 ? 'mr-2 lg:mr-4' : '' }}">
                                                     <div class="flex gap-2 xl:gap-4 items-center">
-                                                        <img class="w-6 h-6 md:w-8 md:h-8 rounded-full object-cover" src="{{ $follower->image ? asset('storage/' . $follower->image) : asset('storage/images/gambar-foto-profil-7.jpg') }}" alt="">
+                                                        <img class="w-6 h-6 md:w-8 md:h-8 rounded-full object-cover" src="{{ $follower->image ? $follower->image : asset('images-profil/gambar-foto-profil-7.jpg') }}" alt="">
                                                         <a href="{{ route('profile.show', $follower->username) }}" class="hover:underline hover:text-blue-600 text-xs sm:text-sm md:text-base">{{ $follower->username }}</a>
                                                     </div>
 
@@ -124,7 +129,7 @@
                                                 @foreach ($followings as $following)
                                                     <div class="flex justify-between items-center {{ $followings->count() >= 8 ? 'mr-2 lg:mr-4' : '' }}">
                                                         <div class="flex gap-2 xl:gap-4 items-center">
-                                                            <img class="w-6 h-6 md::w-8 md::h-8 rounded-full object-cover" src="{{ $following->image ? asset('storage/' . $following->image) : asset('storage/images/gambar-foto-profil-7.jpg') }}" alt="">
+                                                            <img class="w-6 h-6 md::w-8 md::h-8 rounded-full object-cover" src="{{ $following->image ? $following->image : asset('images-profil/gambar-foto-profil-7.jpg') }}" alt="">
                                                             <a href="{{ route('profile.show', $following->username) }}" class="text-xs sm:text-sm md:text-base hover:underline hover:text-blue-600">{{ $following->username }}</a>
                                                         </div>
 

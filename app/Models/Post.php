@@ -47,4 +47,10 @@ class Post extends Model
         return $this->belongsToMany(User::class, 'bookmarks')->withTimestamps();
     }
 
+    // relasi ke tabel hashtag
+    public function hashtags(): BelongsToMany
+    {
+        return $this->belongsToMany(Hashtag::class, 'hashtag_posts');
+    }
+
 }

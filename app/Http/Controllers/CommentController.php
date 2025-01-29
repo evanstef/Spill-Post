@@ -28,6 +28,8 @@ class CommentController extends Controller
 
         $request->validate([
             'reply_comment' => ['required', 'string'],
+        ], [
+            'reply_comment.required' => 'Reply comment cannot be empty.',
         ]);
         $comment->replyComments()->create([
             'body' => $request->reply_comment,

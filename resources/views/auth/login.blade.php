@@ -1,4 +1,9 @@
 <x-guest-layout>
+    {{-- title --}}
+    <x-slot name="title">
+        {{ __('Login') }}
+    </x-slot>
+{{-- akhir title --}}
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 

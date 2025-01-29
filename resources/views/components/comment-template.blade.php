@@ -4,7 +4,7 @@
     <div class="flex items-center justify-between">
         {{-- foto user dan username --}}
         <div class="flex items-center gap-2">
-            <img class="w-6 h-6 lg:w-8 lg:h-8 object-cover rounded-full" src="{{ $comment->user->image ? asset('storage/' . $comment->user->image) : asset('storage/images/gambar-foto-profil-7.jpg') }}" alt="">
+            <img class="w-6 h-6 lg:w-8 lg:h-8 object-cover rounded-full" src="{{ $comment->user->image ? $comment->user->image : asset('images-profil/gambar-foto-profil-7.jpg') }}" alt="">
             <a href="{{ route('profile.show', $comment->user) }}" class="text-[10px] sm:text-xs lg:text-base hover:underline hover:text-blue-600 duration-300 ease-in-out">{{ $comment->user->username }}</a>
         </div>
 
@@ -21,13 +21,13 @@
            <button type="button" @click="openReply = true; commentId = {{ $comment->id }}; username = '{{ $comment->user->username }}'" class="text-[9px] ml-3 sm:text-[10px] md:text-xs hover:cursor-pointer text-blue-500 hover:text-blue-700 hover:underline duration-300">Reply</button>
 
            @if ($comment->replyComments->count() > 0)
-                <button type="button" class="text-[8px] ml-4 block sm:text-xs xl:text-sm hover:cursor-pointer text-white hover:text-slate-300 hover:underline duration-300">---- Replies Comments ({{ $comment->replyComments->count() }})</button>
+                <button type="button" class="text-[8px] ml-4 block sm:text-xs xl:text-sm text-white duration-300">---- Replies Comments ({{ $comment->replyComments->count() }})</button>
                 <div class="pl-4 space-y-2 md:space-y-4">
                 @foreach ($comment->replyComments()->orderBy('created_at', 'desc')->get() as $replyComment)
                 <div>
                     <div class="flex justify-between items-center">
                         <div class="flex items-center gap-1">
-                                <img class="w-3 h-3 sm:w-4 sm:h-4 xl:w-5 xl:h-5 rounded-full object-cover" src="{{ $replyComment->user->image ? asset('storage/' . $replyComment->user->image) : asset('storage/images/gambar-foto-profil-7.jpg') }}" alt="">
+                                <img class="w-3 h-3 sm:w-4 sm:h-4 xl:w-5 xl:h-5 rounded-full object-cover" src="{{ $replyComment->user->image ? $replyComment->user->image : asset('images-profil/gambar-foto-profil-7.jpg') }}" alt="">
                                 <a href="{{ route('profile.show', $replyComment->user) }}" class="text-[8px] hover:underline sm:text-[10px] xl:text-xs hover:text-blue-600 duration-300 ease-in-out">{{ $replyComment->user->username }}</a>
                         </div>
                         <div>

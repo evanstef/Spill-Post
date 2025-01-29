@@ -1,10 +1,10 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+        <h2 class="text-lg font-medium text-gray-100">
             {{ __('Profile Image') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p class="mt-1 text-sm text-gray-400">
             {{ __("Update your image profile") }}
         </p>
     </header>
@@ -12,9 +12,9 @@
     <form method="POST" action="{{ route('profile.update-user-image') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
         <div class="flex items-center gap-6">
-            <img class="w-24 h-24 sm:w-28 sm:h-28 xl:w-32 xl:h-32 rounded-full object-cover" src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('storage/images/gambar-foto-profil-7.jpg') }}" alt="">
+            <img class="w-24 h-24 sm:w-28 sm:h-28 xl:w-32 xl:h-32 rounded-full object-cover" src="{{ Auth::user()->image ? Auth::user()->image : asset('images-profil/gambar-foto-profil-7.jpg') }}" alt="">
             <div class="flex flex-col items-start">
-                <label for="user_image" class="block text-sm md:text-base hover:cursor-pointer bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 sm:py-2 sm:px-4 rounded-lg font-medium dark:text-gray-200">Choose Image</label>
+                <label for="user_image" class="block text-sm md:text-base hover:cursor-pointer bg-gray-600 hover:bg-gray-700 px-3 py-1 sm:py-2 sm:px-4 rounded-lg font-medium text-gray-200">Choose Image</label>
                 {{-- input user image --}}
                 <input type="file" id="user_image" name="image" class="hidden" onchange="previewImage(event)">
                 @error('image')

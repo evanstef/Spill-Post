@@ -51,7 +51,7 @@ class PostFollowingController extends Controller
         }
 
         // Mendapatkan postingan dengan pagination
-        $posts = $query->paginate(5);
+        $posts = $query->paginate(5)->appends(['sort_page_following' => $sortValue]);
 
 
 

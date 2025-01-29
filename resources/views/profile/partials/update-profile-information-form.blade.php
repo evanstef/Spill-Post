@@ -1,10 +1,10 @@
 <section>
     <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+        <h2 class="text-lg font-medium text-gray-100">
             {{ __('Profile Information') }}
         </h2>
 
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+        <p class="mt-1 text-sm text-gray-400">
             {{ __("Update your account's profile information and email address.") }}
         </p>
     </header>
@@ -30,10 +30,10 @@
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
                 <div>
-                    <p class="text-sm mt-2 text-gray-800 dark:text-gray-200">
+                    <p class="text-sm mt-2 text-gray-200">
                         {{ __('Your email address is unverified.') }}
 
-                        <button form="send-verification" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                        <button form="send-verification" class="underline text-sm text-gray-400 hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
@@ -50,7 +50,7 @@
         <div>
             <x-input-label for="description" :value="__('Description')" />
             <textarea name="description" id="description" rows="6" cols="10"
-                            class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ old('content', $user->description) }}</textarea>
+                            class="mt-1 block w-full border-gray-700 bg-gray-900 text-gray-300 focus:border-indigo-600 focus:ring-indigo-600 rounded-md shadow-sm">{{ old('content', $user->description) }}</textarea>
             <x-input-error class="mt-2" :messages="$errors->get('description')" />
         </div>
         <x-primary-button class="mt-4" type="submit">{{ __('Save') }}</x-primary-button>

@@ -18,6 +18,12 @@ return [
         'token' => env('POSTMARK_TOKEN'),
     ],
 
+    // 'imagekit' => [
+    //     'url_endpoint' => env('IMAGEKIT_URL_ENDPOINT'),
+    //     'public_key' => env('IMAGEKIT_PUBLIC_KEY'),
+    //     'private_key' => env('IMAGEKIT_PRIVATE_KEY'),
+    // ],
+
     'ses' => [
         'key' => env('AWS_ACCESS_KEY_ID'),
         'secret' => env('AWS_SECRET_ACCESS_KEY'),

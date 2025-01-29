@@ -26,10 +26,10 @@
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
-        "DB_CONNECTION": "mysql",
-        "DB_HOST": "4e6lk.h.filess.io",
-        "DB_PORT": "3307",
-        "DB_DATABASE": "spillProject_tideguard",
-        "DB_USERNAME": "spillProject_tideguard"
+        "DB_CONNECTION": "pgsql",
+        "DB_HOST": "ep-damp-bonus-a4ovff5k.us-east-1.aws.neon.tech",
+        "DB_PORT": "5432",
+        "DB_DATABASE": "neondb",
+        "DB_USERNAME": "neondb_owner"
     }
 }

@@ -4,7 +4,7 @@
     <div class="flex gap-1 sm:gap-2 items-center">
         {{-- foto dari user --}}
         <div class="w-6 h-6 lg:w-8 lg:h-8">
-            <img class="w-full h-full rounded-full object-cover" src="{{ $user->image ? asset('storage/' . $user->image) : asset('storage/images/gambar-foto-profil-7.jpg') }}" alt="">
+            <img class="w-full h-full rounded-full object-cover" src="{{ $user->image ? $user->image : asset('images-profil/gambar-foto-profil-7.jpg') }}" alt="">
         </div>
 
         {{-- nama dan username --}}

@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\HashtagController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostFollowingController;
 use App\Http\Controllers\ProfileController;
@@ -16,6 +18,9 @@ Route::get('/profile/{user:username}', [ProfileController::class, 'showUserProfi
 
 // menampilkan detail dari postingan masing masing
 Route::get('/post/{post}', [PostController::class, 'showPost'])->name('post.show');
+
+// menampilkan postingan berdasarkan hashtag nya
+Route::get('/post/hashtag/{hashtag:name}', [HashtagController::class, 'showPostHashtag'])->name('post.hashtag.show');
 
 // pencarian user
 // Route::get('/api/users/search', [HomeController::class, 'searchUsers'])->name('search.users');
@@ -62,6 +67,14 @@ Route::middleware('auth')->group(function () {
     // menampilkan semua post yang diikuti user
     Route::get('/following', [PostFollowingController::class, 'showPostFollowing'])->name('post.following');
 
+    // menampilkan semua notif
+    Route::get('/notification', [NotificationController::class, 'index'])->name('notification');
+
+    // untuk menandai semua notif di read
+    Route::post('/notification/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('notification.mark-all-as-read');
+
+    // menghapus semua notifikasi pada user yang saat ini sedang login
+    Route::delete('/notification/delete-all', [NotificationController::class, 'deleteAllNotification'])->name('notification.delete-all');
 });
 
 require __DIR__.'/api.php';

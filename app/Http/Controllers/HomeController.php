@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class HomeController extends Controller
 {
@@ -38,7 +39,7 @@ class HomeController extends Controller
         }
 
         // menampilkan semua postingan yang sudah di sort sesuai dengan keinginan user
-        $posts = $query->paginate(5);
+        $posts = $query->paginate(5)->appends(['sort' => $sortValue]);
 
 
         return view('home',
@@ -60,5 +61,7 @@ class HomeController extends Controller
                               ->orWhere('name', 'like', '%' . $searchUser . '%')
                               ->get();
         return response()->json($users);
+
     }
+
 }

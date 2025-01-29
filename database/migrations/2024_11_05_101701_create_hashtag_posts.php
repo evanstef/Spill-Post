@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->text('description')->after('image')->nullable();
+        Schema::create('hashtag_posts', function (Blueprint $table) {
+            $table->id();
+            $table->foreignUuid('post_id')->constrained('posts')->onDelete('cascade');
+            $table->foreignId('hashtag_id')->constrained('hashtags')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -21,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('hashtag_posts');
     }
 };

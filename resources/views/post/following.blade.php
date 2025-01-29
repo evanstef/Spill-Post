@@ -4,6 +4,11 @@
             {{ __('Dashboard') }}
         </h2>
     </x-slot> --}}
+    {{-- title --}}
+    <x-slot name="title">
+        {{ __('Following') }}
+    </x-slot>
+{{-- akhir title --}}
     {{-- Postingan Content --}}
     <x-layout-content class="w-[75%] sm:w-[60%] rounded-lg ml-4 sm:ml-0">
     {{-- loading component --}}
@@ -59,7 +64,10 @@
                     <div class="bg-white h-[1px] w-full"></div>
                 @endif
             @endforeach
-            <div class="p-3 sm:p-4">{{ $posts->links() }}</div>
+            @if ($posts->hasPages())
+               <div class="p-3 sm:p-4">{{ $posts->links() }}</div>
+            @endif
+
         @endif
     @endif
 

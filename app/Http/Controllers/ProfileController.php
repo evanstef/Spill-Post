@@ -4,14 +4,25 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
+use App\Services\ImageKitService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
+
 {
+    protected $imageKitService;
+
+    public function __construct(ImageKitService $imageKitService)
+    {
+        $this->imageKitService = $imageKitService;
+    }
+
+    // Akhir Image Kit Service
     /**
      * Display the user's profile form.
      */
@@ -135,15 +146,22 @@ class ProfileController extends Controller
     public function updateUserImage(Request $request)
     {
         // Validasi file yang diunggah
-        $validated = $request->validate([
+        $request->validate([
             'image' => ['required', 'image' ,'mimes:png,jpg,jpeg'],
         ]);
 
         // Ambil file dari request
         $file = $request->file('image');
 
-        // Simpan file di direktori 'images/users' dalam disk publik
-        $imagePath = $file->store('images/users', 'public');
+        // filename untuk profile users
+        $fileName = time() . '_' . Str::random(10) . '.' . $file->getClientOriginalExtension();
+
+        // Simpan file di direktori ke ImageKit.io
+        $imagePath = $this->imageKitService->upload(
+            $file,
+            $fileName,
+            'users'
+        );
 
         // Update kolom 'image' dari user yang terautentikasi
         User::where('id', Auth::id())->update([
