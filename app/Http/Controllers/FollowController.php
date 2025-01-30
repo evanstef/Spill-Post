@@ -23,7 +23,6 @@ class FollowController extends Controller
             'user_id' => $user->id,
             'action_by' => Auth::user()->id,
             'type' => 'follow',
-            'post_id' => null
         ]);
 
         return redirect()->back();
@@ -39,4 +38,5 @@ class FollowController extends Controller
 
         return redirect()->back();
     }
+
 }

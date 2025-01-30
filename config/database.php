@@ -82,19 +82,34 @@ return [
             ]) : [],
         ],
 
+        // khusus neon tech
+        // 'pgsql' => [
+        //     'driver' => 'pgsql',
+        //     'url' => env('DATABASE_URL'),
+        //     'charset' => 'utf8',
+        //     'prefix' => '',
+        //     'prefix_indexes' => true,
+        //     'search_path' => 'public',
+        //     'sslmode' => 'require',
+        // ],
+
+        // khusus supabase
         'pgsql' => [
-                'driver' => 'pgsql',
-                'url' => env('DATABASE_URL'),
-                'host' => parse_url(env('DATABASE_URL', ''))['host'] ?? null,
-                'port' => parse_url(env('DATABASE_URL', ''))['port'] ?? '5432',
-                'database' => ltrim(parse_url(env('DATABASE_URL', ''))['path'] ?? 'forge', '/'),
-                'username' => parse_url(env('DATABASE_URL', ''))['user'] ?? 'forge',
-                'password' => parse_url(env('DATABASE_URL', ''))['pass'] ?? '',
-                'charset' => 'utf8',
-                'prefix' => '',
-                'search_path' => 'public',
-                'sslmode' => 'require',
-            ],
+            'driver'   => 'pgsql',
+            'url'      => env('DATABASE_URL'),
+            'host'     => env('DB_HOST', 'ttwzhrusdfupkxfpfnwn.supabase.co'),
+            'port'     => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE', 'postgres'),
+            'username' => env('DB_USERNAME', 'postgres'),
+            'password' => env('DB_PASSWORD', ''),
+            'charset'  => 'utf8',
+            'prefix'   => '',
+            'schema'   => 'public',
+            'sslmode'  => env('DB_SSLMODE', 'require'),
+        ],
+
+
+
 
         'sqlsrv' => [
             'driver' => 'sqlsrv',
