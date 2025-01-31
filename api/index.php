@@ -1,2 +1,4 @@
 <?php
-require __DIR__ . '../vercel-php-runtime.php';
+require __DIR__ . '../public/index.php';
+
+?>
