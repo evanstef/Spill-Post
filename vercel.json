@@ -1,27 +1,41 @@
 {
     "version": 2,
-    "framework": null,
-    "regions": [
-        "fra1"
-    ],
     "functions": {
-
-        "api/index.php": { "runtime": "vercel-php@0.7.1" }
-
+        "api/index.php": {
+            "runtime": "vercel-php@0.7.2"
+        }
     },
     "routes": [
-        { "src": "/js/(.*)", "dest": "/public/js/$1" },
-        { "src": "/build/(.*)", "dest": "/public/build/" },
-        { "src": "/(.*)", "dest": "/api/index.php" }
+        {
+            "src": "^/build/(.*)$",
+            "dest": "/public/build/$1",
+            "continue": true
+        },
+        {
+            "src": "^/js/(.*)$",
+            "dest": "/public/js/$1",
+            "continue": true
+        },
+        {
+            "src": "^/css/(.*)$",
+            "dest": "/public/css/$1",
+            "continue": true
+        },
+        {
+            "src": "^/favicon\\.ico$",
+            "dest": "/public/favicon.ico",
+            "continue": true
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
     ],
-    "public": true,
-    "buildCommand": "vite build",
-    "outputDirectory": "public",
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "false",
-        "APP_URL": "https://spill-post-project.vercel.app/",
-        "APP_KEY": "base64:3PqonAq3SaA2u4B31eK70Ph9gXe5ki+ot/5iAjI38i0=",
+        "APP_KEY" : "base64:FnDF6aITnCZYT0A85wvNx1uf7rHah5mlXKgF0RXgMBM=",
+        "APP_URL": "https://spill-post-project.vercel.app",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
@@ -30,6 +44,8 @@
         "VIEW_COMPILED_PATH": "/tmp",
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie"
+        "SESSION_DRIVER": "cookie",
+        "ASSET_URL": "https://spill-post-project.vercel.app",
+        "DB_CONNECTION": "pgsql"
     }
 }

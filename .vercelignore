@@ -1,5 +1,2 @@
 /vendor
 /node_modules
-storage/logs
-bootstrap/cache
-public/hot
