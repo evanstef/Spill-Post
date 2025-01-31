@@ -37,8 +37,10 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "mkdir -p public/storage",
-            "php artisan storage:link",
+            "php artisan cache:clear",
+            "php artisan config:clear",
+            "php artisan route:clear",
+            "php artisan view:clear",
             "chmod -R 777 storage",
             "chmod -R 777 bootstrap/cache"
         ],
