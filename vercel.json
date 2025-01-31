@@ -1,21 +1,40 @@
 {
     "version": 2,
-    "framework": null,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.7.2" }
+        "api/index.php": {
+            "runtime": "vercel-php@0.7.2"
+        }
     },
     "routes": [
-        { "src": "/js/(.*)", "dest": "/public/js/$1" },
-        { "src": "/build/(.*)", "dest": "/public/build/" },
-        { "src": "/(.*)", "dest": "/api/index.php" }
+        {
+            "src": "^/build/(.*)$",
+            "dest": "/public/build/$1"
+        },
+        {
+            "src": "^/js/(.*)$",
+            "dest": "/public/js/$1"
+        },
+        {
+            "src": "^/css/(.*)$",
+            "dest": "/public/css/$1"
+        },
+        {
+            "src": "^/favicon\\.ico$",
+            "dest": "/public/favicon.ico"
+        },
+        {
+            "src": "^/robots\\.txt$",
+            "dest": "/public/robots.txt"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/api/index.php"
+        }
     ],
-    "public": true,
-    "buildCommand": "vite build",
-    "outputDirectory": "public",
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "false",
-        "APP_URL": "https://spill-post-project.vercel.app/",
+        "APP_URL": "https://spill-post-project.vercel.app",
         "APP_KEY": "base64:FnDF6aITnCZYT0A85wvNx1uf7rHah5mlXKgF0RXgMBM=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
@@ -26,7 +45,6 @@
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
-        "DB_CONNECTION": "pgsql",
-        "DATABASE_URL":"postgresql://neondb_owner:endpoint=ep-damp-bonus-a4ovff5k;npg_9nWvjUPgJ1Zx@ep-damp-bonus-a4ovff5k.us-east-1.aws.neon.tech/neondb?sslmode=require"
+        "DB_CONNECTION": "pgsql"
     }
 }
