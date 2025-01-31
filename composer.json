@@ -41,6 +41,7 @@
             "php artisan config:clear",
             "php artisan route:clear",
             "php artisan view:clear",
+            "mkdir -p storage/framework/{sessions,views,cache}",
             "chmod -R 777 storage",
             "chmod -R 777 bootstrap/cache"
         ],

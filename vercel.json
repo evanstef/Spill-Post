@@ -8,23 +8,23 @@
     "routes": [
         {
             "src": "^/build/(.*)$",
-            "dest": "/public/build/$1"
+            "dest": "/public/build/$1",
+            "continue": true
         },
         {
             "src": "^/js/(.*)$",
-            "dest": "/public/js/$1"
+            "dest": "/public/js/$1",
+            "continue": true
         },
         {
             "src": "^/css/(.*)$",
-            "dest": "/public/css/$1"
+            "dest": "/public/css/$1",
+            "continue": true
         },
         {
             "src": "^/favicon\\.ico$",
-            "dest": "/public/favicon.ico"
-        },
-        {
-            "src": "^/robots\\.txt$",
-            "dest": "/public/robots.txt"
+            "dest": "/public/favicon.ico",
+            "continue": true
         },
         {
             "src": "/(.*)",
@@ -33,9 +33,8 @@
     ],
     "env": {
         "APP_ENV": "production",
-        "APP_DEBUG": "false",
+        "APP_DEBUG": "true",
         "APP_URL": "https://spill-post-project.vercel.app",
-        "APP_KEY": "base64:FnDF6aITnCZYT0A85wvNx1uf7rHah5mlXKgF0RXgMBM=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
@@ -45,6 +44,7 @@
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
         "SESSION_DRIVER": "cookie",
+        "ASSET_URL": "https://spill-post-project.vercel.app",
         "DB_CONNECTION": "pgsql"
     }
 }
