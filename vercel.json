@@ -8,6 +8,14 @@
         "api/index.php": { "runtime": "vercel-php@0.7.1" }
     },
     "routes": [
+        {
+            "src": "/storage/(.*)",
+            "dest": "/public/storage/$1"
+        },
+        {
+            "src": "/images/(.*)",
+            "dest": "/public/images/$1"
+        },
         { "src": "/js/(.*)", "dest": "/public/js/$1" },
         { "src": "/build/(.*)", "dest": "/public/build/" },
         { "src": "/(.*)", "dest": "/api/index.php" }
