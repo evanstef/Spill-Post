@@ -18,7 +18,7 @@
     "env": {
         "APP_ENV": "production",
         "APP_DEBUG": "false",
-        "APP_URL": "https://spill-post-project.vercel.app/",
+        "APP_URL": "https://spill-post.vercel.app/",
         "APP_KEY": "base64:aaUoQ3HNtO/w8JDcbwxel8CPo0hN3bsHBtvIflv0cIA=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
@@ -28,6 +28,7 @@
         "VIEW_COMPILED_PATH": "/tmp",
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie"
+        "SESSION_DRIVER": "cookie",
+        "DB_CONNECTION" : "pgsql"
     }
 }
