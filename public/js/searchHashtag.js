@@ -90,7 +90,7 @@ async function showHashtag() {
                 // melooping semua data hashtags yang ada
                 hashtagContainer.innerHTML = hashtags.map((item) => {
                 return `
-                    <div onclick="selectHashtag('${item.name}')" class="text-[9px] sm:text-[10px] rounded px-2 py-1 lg:py-2 lg:text-sm hover:cursor-pointer hover:bg-gray-700 duration-200 ease-in-out line-clamp-1">
+                    <div onclick="selectHashtag('${item.name}')" class="text-[10px] rounded px-2 py-1 lg:py-2 lg:text-sm hover:cursor-pointer hover:bg-gray-700 duration-200 ease-in-out line-clamp-1">
                         ${item.name}
                     </div>
                 `
