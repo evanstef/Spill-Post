@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/users/search', [HomeController::class, 'searchUsers']);
 
 // pencaraian hashtag
-Route::get('/api/hashtag', [HashtagController::class, 'searchHashtag']);
+Route::get('/search/hashtag', [HashtagController::class, 'searchHashtag']);
 
 // Route::get('users', [HomeController::class, 'uploadTest'])->name('upload.test');
 ?>

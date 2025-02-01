@@ -70,7 +70,7 @@ async function showHashtag() {
 
         // Memuat data hashtag dari API
         try {
-            const response = await fetch(`/api/hashtag?content_hashtag=${encodeURIComponent(hashtag)}`, {
+            const response = await fetch(`/search/hashtag?content_hashtag=${encodeURIComponent(hashtag)}`, {
                 method: 'GET',
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest',
