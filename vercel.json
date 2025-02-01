@@ -13,8 +13,8 @@
             "dest": "/public/storage/$1"
         },
         {
-            "src": "/images/(.*)",
-            "dest": "/public/images/$1"
+            "src": "/images-profil/(.*)",
+            "dest": "/public/images-profil/$1"
         },
         { "src": "/js/(.*)", "dest": "/public/js/$1" },
         { "src": "/build/(.*)", "dest": "/public/build/" },
