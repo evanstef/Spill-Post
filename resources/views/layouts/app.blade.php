@@ -33,7 +33,7 @@
                             @csrf
                             <div class="mb-4 relative">
                                 <textarea name="content_coba" id="content" rows="6" cols="10"
-                                    class="mt-1 text-sm lg:text-base block w-full border-none bg-transparent focus:ring-0 focus:border-none" placeholder="What's on your mind ?" oninput="showHashtag()"></textarea>
+                                    class="mt-1 text-sm lg:text-base block w-full border-none bg-transparent focus:ring-0 focus:border-none" placeholder="What's on your mind? (with '#' use existing hashtag or create a new one)" oninput="showHashtag()"></textarea>
 
                                 {{-- menampilkan hashtag yang tersedia tergantung dari kata kunci yang user ketik --}}
                                 <div id="hashtag-container" class="absolute hidden w-36 lg:w-44 h-auto bg-gray-800 rounded shadow-lg border border-gray-700 top-36 left-7 lg:top-40 xl:top-44 sm:left-10 p-1 lg:p-2 space-y-2">
