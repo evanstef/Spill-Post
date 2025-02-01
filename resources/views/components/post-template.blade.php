@@ -7,7 +7,7 @@
         <div class="flex items-center gap-2">
             {{-- image users --}}
             <div class="w-6 h-6 md:w-7 md:h-7 xl:w-8 xl:h-8">
-                <img class="w-full h-full object-cover rounded-full" src="{{ $post->user->image ? $post->user->image : asset('storage/images/gambar-foto-profil-7.jpg') }}" alt="">
+                <img class="w-full h-full object-cover rounded-full" src="{{ $post->user->image ? $post->user->image : asset('images-profil/gambar-foto-profil-7.jpg') }}" alt="">
             </div>
             <a href="{{ route('profile.show', $post->user) }}" class="text-xs md:text-sm lg:text-base hover:underline hover:text-blue-600 duration-300 ease-in-out">{{ $post->user->username }}</a>
         </div>
