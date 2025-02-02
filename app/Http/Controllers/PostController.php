@@ -117,7 +117,12 @@ class PostController extends Controller
             'action_by' => Auth::user()->id,
         ]);
 
-        return redirect()->back();
+        // return redirect()->back();
+        return response()->json([
+            'success' => true,
+            'likeCount' => $post->likedByUsers()->count(),
+            'userWhoLikesPost' => $post->likedByUsers()->orderBy('post_like_user.created_at', 'desc')->get()
+        ]);
     }
 
     // fitur unlike postingan
@@ -130,7 +135,12 @@ class PostController extends Controller
                     ->where('action_by', Auth::user()->id)
                     ->where('type', 'like')->delete();
 
-        return redirect()->back();
+        // return redirect()->back();
+        return response()->json([
+            'success' => true,
+            'likeCount' => $post->likedByUsers()->count(),
+            'userWhoLikesPost' => $post->likedByUsers()->orderBy('post_like_user.created_at', 'desc')->get()
+        ]);
     }
 
     // fitur komenan postingan

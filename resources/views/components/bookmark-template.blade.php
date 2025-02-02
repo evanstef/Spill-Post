@@ -67,15 +67,47 @@
     {{-- like,comment,book.share --}}
     <div class="flex justify-around items-center">
         {{-- like --}}
-        <form action="{{ Auth::check() && $bookmark->post->likedByUsers->contains(Auth::user()->id) ? route('post.unlike', $bookmark->post) : route('post.like', $bookmark->post) }}" method="POST">
+        <form x-data="{ likedPostBookmark: {{ Auth::check() && $bookmark->post->likedByUsers->contains(Auth::user()->id) ? 'true' : 'false' }},
+                        likeCountPostBookmark: {{ $bookmark->post->likedByUsers()->count() }},
+                        userWhoLikesPostBookmark: {{ $bookmark->post->likedByUsers()->orderBy('post_like_user.created_at', 'desc')->get() }}
+                    }"
+             >
             @csrf
             <div x-data="{ showWhoLikesPostBookmarks : false}" class="flex items-center gap-2">
-                <button type="submit">
+                <button x-data="{ loadingPostBookmark: false }"
+                        type="button"
+                        :disabled="loadingPostBookmark"
+                        x-on:click="
+                            if (loadingPostBookmark) return;
+                            loadingPostBookmark = true;
+                            fetch(likedPostBookmark ? '{{ route('post.unlike', $bookmark->post) }}' : '{{ route('post.like', $bookmark->post) }}', {
+                                method: likedPostBookmark ? 'DELETE' : 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Accept': 'application/json'
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    likedPostBookmark = !likedPostBookmark;
+                                    likeCountPostBookmark = data.likeCount; // Ambil jumlah like terbaru dari server
+                                    userWhoLikesPostBookmark = data.userWhoLikesPost;
+                                    $data.liked = likedPostBookmark; // Paksa Alpine.js update tampilan
+                                    $data.likeCount = likeCountPostBookmark;
+                                }
+                                loadingPostBookmark = false;
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                loadingPostBookmark = false;
+                            });
+                        ">
                     <svg class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path class="{{ Auth::check() && $bookmark->post->likedByUsers->contains(Auth::user()->id) ? 'fill-red-600' : '' }}" d="M19.16 2.61C18.0983 1.54801 16.6907 0.902327 15.1932 0.790382C13.6957 0.678437 12.2078 1.10766 11 2C9.72766 1.05364 8.14399 0.624512 6.56792 0.799038C4.99185 0.973564 3.54044 1.73878 2.50597 2.94059C1.47151 4.14239 0.930823 5.69152 0.992802 7.27601C1.05478 8.86051 1.71482 10.3627 2.84 11.48L10.29 18.93C10.383 19.0237 10.4936 19.0981 10.6154 19.1489C10.7373 19.1997 10.868 19.2258 11 19.2258C11.132 19.2258 11.2627 19.1997 11.3846 19.1489C11.5064 19.0981 11.617 19.0237 11.71 18.93L19.16 11.48C19.7427 10.8977 20.2049 10.2063 20.5202 9.44537C20.8356 8.68439 20.9979 7.86873 20.9979 7.045C20.9979 6.22127 20.8356 5.40561 20.5202 4.64463C20.2049 3.88366 19.7427 3.19228 19.16 2.61ZM17.75 10.07L11 16.81L4.25 10.07C3.65518 9.4727 3.24998 8.71305 3.08523 7.88634C2.92049 7.05963 3.00353 6.20268 3.32395 5.42299C3.64437 4.6433 4.1879 3.97559 4.88635 3.50362C5.58479 3.03165 6.40706 2.77644 7.25 2.77C8.37611 2.77276 9.4551 3.22234 10.25 4.02C10.343 4.11373 10.4536 4.18812 10.5754 4.23889C10.6973 4.28966 10.828 4.3158 10.96 4.3158C11.092 4.3158 11.2227 4.28966 11.3446 4.23889C11.4664 4.18812 11.577 4.11373 11.67 4.02C12.4883 3.31088 13.5455 2.93915 14.6275 2.98003C15.7096 3.0209 16.7357 3.47135 17.4982 4.24019C18.2607 5.00903 18.7026 6.03884 18.7345 7.12119C18.7664 8.20354 18.3859 9.25759 17.67 10.07H17.75Z" fill="#FDF9F9"/>
+                        <path :class="likedPostBookmark ? 'fill-red-600' : ''" d="M19.16 2.61C18.0983 1.54801 16.6907 0.902327 15.1932 0.790382C13.6957 0.678437 12.2078 1.10766 11 2C9.72766 1.05364 8.14399 0.624512 6.56792 0.799038C4.99185 0.973564 3.54044 1.73878 2.50597 2.94059C1.47151 4.14239 0.930823 5.69152 0.992802 7.27601C1.05478 8.86051 1.71482 10.3627 2.84 11.48L10.29 18.93C10.383 19.0237 10.4936 19.0981 10.6154 19.1489C10.7373 19.1997 10.868 19.2258 11 19.2258C11.132 19.2258 11.2627 19.1997 11.3846 19.1489C11.5064 19.0981 11.617 19.0237 11.71 18.93L19.16 11.48C19.7427 10.8977 20.2049 10.2063 20.5202 9.44537C20.8356 8.68439 20.9979 7.86873 20.9979 7.045C20.9979 6.22127 20.8356 5.40561 20.5202 4.64463C20.2049 3.88366 19.7427 3.19228 19.16 2.61ZM17.75 10.07L11 16.81L4.25 10.07C3.65518 9.4727 3.24998 8.71305 3.08523 7.88634C2.92049 7.05963 3.00353 6.20268 3.32395 5.42299C3.64437 4.6433 4.1879 3.97559 4.88635 3.50362C5.58479 3.03165 6.40706 2.77644 7.25 2.77C8.37611 2.77276 9.4551 3.22234 10.25 4.02C10.343 4.11373 10.4536 4.18812 10.5754 4.23889C10.6973 4.28966 10.828 4.3158 10.96 4.3158C11.092 4.3158 11.2227 4.28966 11.3446 4.23889C11.4664 4.18812 11.577 4.11373 11.67 4.02C12.4883 3.31088 13.5455 2.93915 14.6275 2.98003C15.7096 3.0209 16.7357 3.47135 17.4982 4.24019C18.2607 5.00903 18.7026 6.03884 18.7345 7.12119C18.7664 8.20354 18.3859 9.25759 17.67 10.07H17.75Z" fill="#FDF9F9"/>
                     </svg>
                 </button>
-                <p @click="showWhoLikesPostBookmarks = true" class="text-[10px] sm:text-base hover:underline hover:cursor-pointer hover:text-blue-600">{{ $bookmark->post->likedByUsers->count() }}</p>
+                <p @click="showWhoLikesPostBookmarks = true" class="text-[10px] sm:text-base hover:underline hover:cursor-pointer hover:text-blue-600" x-text="likeCountPostBookmark"></p>
 
 
                 {{-- menu untuk menampilkan siapa saja user yang like postingan ini --}}
@@ -96,26 +128,27 @@
                         </button>
 
                         {{-- list user yang like postingan ini --}}
-                        <p class="font-bold text-sm sm:text-base md:text-lg text-center">Total Likes This Post {{ $bookmark->post->likedByUsers->count() }}</p>
+                        <p class="font-bold text-sm sm:text-base md:text-lg text-center">Total Likes This Post <span x-text="likeCountPostBookmark"></span></p>
                         <div class="w-full h-0.5 my-4 bg-gray-200"></div>
 
                         {{-- menampilkan user yang like --}}
-                        <div class="space-y-5 h-[85%] {{ $userLikesPost->count() >= 8 ? 'overflow-y-scroll' : '' }} custom-scrollbar">
-                            @if ($userLikesPost->count() === 0)
+                        <div class="space-y-5 h-[85%] overflow-y-scroll scrollbar-thumb-gray-400 scrollbar-track-transparent scrollbar-thin">
+                            <template x-if="userWhoLikesPostBookmark.length === 0">
                                 <p class="text-center text-sm sm:text-base md:text-lg">No Likes yet</p>
-                            @else
-                                @foreach ($userLikesPost as $user)
+                            </template>
+                            <template x-for="user in userWhoLikesPostBookmark" :key="user.id">
                                 <div class="flex items-center justify-between mr-2 sm:mr-4">
                                     <div class="flex items-center gap-2">
-                                        <img src="{{ $user->image ?  $user->image : asset('images-profil/gambar-foto-profil-7.jpg') }}" class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 rounded-full object-cover" alt="">
-                                        <a href="{{ route('profile.show', $user) }}" class="text-sm sm:text-base hover:underline hover:text-blue-600 duration-300 ease-in-out">{{ $user->username }}</a>
+                                        <img :src="user.image ? user.image : '{{ asset('images-profil/gambar-foto-profil-7.jpg') }}'"
+                                             class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 rounded-full object-cover" alt="">
+                                        <a :href="'/profile/' + user.id" class="text-sm sm:text-base hover:underline hover:text-blue-600 duration-300 ease-in-out" x-text="user.username"></a>
                                     </div>
                                     <div>
-                                        <p class="text-[8px] sm:text-[10px]">{{ $user->pivot->created_at->toFormattedDateString() }}</p>
+                                        <p class="text-[8px] sm:text-[10px]" x-text="formatDatePostBookmark(user.pivot.created_at)"></p>
                                     </div>
                                 </div>
-                                @endforeach
-                            @endif
+                            </template>
+
                         </div>
                     </div>
                 </div>
@@ -154,6 +187,10 @@
 
 </div>
 <script>
+    function formatDatePostBookmark(dateString) {
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('id-ID', options);
+    }
     // Loop melalui setiap carousel bookmark
     document.querySelectorAll('.carousel-bookmark').forEach(carousel => {
         const postIdBookmark = carousel.getAttribute('data-post-bookmark-id');
