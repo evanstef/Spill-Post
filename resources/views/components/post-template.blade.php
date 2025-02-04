@@ -175,7 +175,7 @@
                                         <div class="flex items-center gap-2">
                                             <img :src="user.image ? user.image : '{{ asset('images-profil/gambar-foto-profil-7.jpg') }}'"
                                                 class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 rounded-full object-cover" alt="">
-                                            <a :href="'/profile/' + user.id" class="text-sm sm:text-base hover:underline hover:text-blue-600 duration-300 ease-in-out" x-text="user.username"></a>
+                                            <a :href="'/profile/' + user.username" class="text-sm sm:text-base hover:underline hover:text-blue-600 duration-300 ease-in-out" x-text="user.username"></a>
                                         </div>
                                         <div>
                                             <p class="text-[8px] sm:text-[10px]" x-text="formatDatePost(user.pivot.created_at)"></p>
