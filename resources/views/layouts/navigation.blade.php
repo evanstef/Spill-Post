@@ -97,7 +97,7 @@
             <div class="pt-4 pb-1 border-t border-gray-600">
                 <a href="{{ route('profile.show', Auth::user()->username) }}" class="px-4 flex items-center gap-2 hover:bg-gray-700 py-1">
                     {{-- Foto User --}}
-                    <img class="w-10 h-10 rounded-full object-cover" src="{{ Auth::user()->image ?Auth::user()->image : asset('storage/images/gambar-foto-profil-7.jpg') }}" alt="">
+                    <img class="w-10 h-10 rounded-full object-cover" src="{{ Auth::user()->image ?Auth::user()->image : asset('images-profil/gambar-foto-profil-7.jpg') }}" alt="">
 
                     <div>
                         <div class="font-medium text-base text-gray-200">{{ Auth::user()->name }}</div>
