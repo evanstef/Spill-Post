@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-layout-content class="w-[75%] sm:w-[60%] rounded-lg ml-4 sm:ml-0">
+    <x-layout-content class="w-full sm:w-[60%] rounded-lg mx-4 sm:mx-0">
 
         {{-- Postingan detail --}}
         <div class="p-3 sm:p-6 space-y-4">
@@ -9,7 +9,7 @@
                 @csrf
                 <div class="flex items-start gap-2">
                     <div class="w-[80%]">
-                      <x-text-input class="w-full py-1 md:py-2  text-[11px] md:text-base" name="comment" type="text" placeholder="Add a comment..." autocomplete="off"></x-text-input>
+                      <x-text-input class="w-full py-1 md:py-2 text-[11px] md:text-base" name="comment" type="text" placeholder="Add a comment..." autocomplete="off"></x-text-input>
                         @error('comment')
                             <p class="text-red-500">{{ $message }}</p>
                         @enderror
@@ -38,7 +38,7 @@
     </x-layout-content>
 
     {{-- Suggesstion To Follow --}}
-    <x-layout-content class="w-[25%] sm:w-[20%] p-3 sm:p-4 rounded-lg mr-4 sm:mr-0">
+    <x-layout-content class="hidden sm:block sm:w-[20%] p-3 sm:p-4 rounded-lg">
         {{-- User user yang baru daftar di web ini --}}
         <div class="space-y-4">
             <h1 class="text-[10px] sm:text-xs lg:text-base">Who To Follow</h1>

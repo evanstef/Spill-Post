@@ -10,7 +10,7 @@
         </x-slot>
     {{-- akhir title --}}
     {{-- Postingan Content --}}
-    <x-layout-content class="{{ request()->routeIs('post.hashtag.show') ? 'w-full sm:w-[80%] mr-4' : 'w-[75%] sm:w-[60%]' }} rounded-lg ml-4 sm:ml-0">
+    <x-layout-content class="{{ request()->routeIs('post.hashtag.show') ? 'w-full sm:w-[80%] mr-4' : 'w-full sm:w-[60%]' }} rounded-lg mx-4 sm:mx-0">
             {{-- loading component --}}
             <div id="loading-indicator-home" class="flex items-center justify-center flex-col absolute w-full top-0 left-0 h-full z-50" style="display: none">
                 <div class="animate-spin rounded-full h-20 w-20 border-t-4 border-b-4 border-blue-600"></div>
@@ -65,7 +65,7 @@
 
     {{-- Suggesstion To Follow --}}
     @if (!request()->routeIs('post.hashtag.show'))
-        <x-layout-content class="w-[25%] sm:w-[20%] p-3 xl:p-4 rounded-lg mr-4 sm:mr-0">
+        <x-layout-content class="hidden sm:block sm:w-[20%] p-3 xl:p-4 rounded-lg sm:mr-0">
             {{-- User user yang baru daftar di web ini --}}
             <div class="space-y-4">
                 <h1 class="text-[10px] sm:text-xs lg:text-base">Who To Follow</h1>
